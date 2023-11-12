@@ -1,4 +1,4 @@
-le: mapleader=" "
+let mapleader=" "
 
 " split resize
 nnoremap <Leader>> 10<C-w>>
