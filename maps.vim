@@ -1,4 +1,4 @@
-let mapleader=" "
+le: mapleader=" "
 
 " split resize
 nnoremap <Leader>> 10<C-w>>
@@ -54,88 +54,6 @@ nnoremap <Leader>G :G<cr>
 nnoremap <Leader>gp :Gpush<cr>
 nnoremap <Leader>gl :Gpull<cr>
 
-" run current file
-nnoremap <Leader>x :!node %<cr>
-
-" Use <c-space> to trigger completion.
-"if &filetype == "javascript" || &filetype == "python"
-  "inoremap <c-space> <C-x><C-u>
-"else
-  inoremap <silent><expr> <c-space> coc#refresh()
-"endif
-
-
-set splitright
-function! OpenTerminal()
-  " move to right most buffer
-  execute "normal \<C-l>"
-  execute "normal \<C-l>"
-  execute "normal \<C-l>"
-  execute "normal \<C-l>"
-
-  let bufNum = bufnr("%")
-  let bufType = getbufvar(bufNum, "&buftype", "not found")
-
-  if bufType == "terminal"
-    " close existing terminal
-    execute "q"
-  else
-    " open terminal
-    execute "vsp term://bash"
-
-    " turn off numbers
-    execute "set nonu"
-    execute "set nornu"
-
-    " toggle insert on enter/exit
-    silent au BufLeave <buffer> stopinsert!
-    silent au BufWinEnter,WinEnter <buffer> startinsert!
-
-    " set maps inside terminal buffer
-    execute "tnoremap <buffer> <C-h> <C-\\><C-n><C-w><C-h>"
-    execute "tnoremap <buffer> <C-t> <C-\\><C-n>:q<CR>"
-    execute "tnoremap <buffer> <C-\\><C-\\> <C-\\><C-n>"
-
-    startinsert!
-  endif
-endfunction
-nnoremap <C-t> :call OpenTerminal()<CR>
-
-inoremap <expr> <CR> ParensIndent()
-
-function! ParensIndent()
-  let prev = col('.') - 1
-  let after = col('.')
-  let prevChar = matchstr(getline('.'), '\%' . prev . 'c.')
-  let afterChar = matchstr(getline('.'), '\%' . after . 'c.')
-  if (prevChar == '"' && afterChar == '"') ||
-\    (prevChar == "'" && afterChar == "'") ||
-\    (prevChar == "(" && afterChar == ")") ||
-\    (prevChar == "{" && afterChar == "}") ||
-\    (prevChar == "[" && afterChar == "]")
-    return "\<CR>\<ESC>O"
-  endif
-
-  return "\<CR>"
-endfunction
-
-inoremap <expr> <space> ParensSpacing()
-
-function! ParensSpacing()
-  let prev = col('.') - 1
-  let after = col('.')
-  let prevChar = matchstr(getline('.'), '\%' . prev . 'c.')
-  let afterChar = matchstr(getline('.'), '\%' . after . 'c.')
-  if (prevChar == '"' && afterChar == '"') ||
-\    (prevChar == "'" && afterChar == "'") ||
-\    (prevChar == "(" && afterChar == ")") ||
-\    (prevChar == "{" && afterChar == "}") ||
-\    (prevChar == "[" && afterChar == "]")
-    return "\<space>\<space>\<left>"
-  endif
-
-  return "\<space>"
-endfunction
 
 inoremap <expr> <BS> ParensRemoveSpacing()
 
