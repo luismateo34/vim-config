@@ -11,9 +11,10 @@ set showmatch
 set termguicolors
 set sw=2
 set relativenumber
-if &term == "alacritty"
-  let &term = "xterm-256color"
-endif
+""if &term == "alacritty"
+""  let &term = "xterm-256color"
+""endif
+let &term = "xterm-256color"
 set hlsearch                    " highlight matches
 set incsearch                   " incremental searching
 set ignorecase                  " searches are case insensitive...
